@@ -1,0 +1,665 @@
+
+###############################################################################
+#FIND FILES RECURCEVELY WITH PATTERN:
+import glob
+dir_recive_search = '/discover/nobackup/ntausnev/RUNS_ME/Eh06f10bF102/**/'
+my_pattern = '*.Eh06f10bF102'
+string_in = dir_recive_search + my_pattern
+print(f'Try find file(recurcevely) with: {string_in}')
+
+files = glob.iglob(string_in, recursive=True)
+generator_list = list(files); print(generator_list)
+
+###############################################################################
+#Thank you for this addition. In this example I just wanted to strip both ends.
+#To only remove the linebreaks, you have to specify the linebreak character:
+c = [line.rstrip('\n') for line in open('file.txt')]
+###############################################################################
+List mapping
+l = list(map(int, ['1', '2', '3']))
+# print(l) >> [1, 2, 3]
+You can also use Pythons map() function to cast every list element to another type.
+###############################################################################
+#Write string to file
+with open('file.txt', 'a') as f: f.write('hello world')
+# print(list(open('file.txt'))) >> ['test1\n', 'test2\n', 'test3\n', 'test4\n', 'hello world']
+With the help of the with statement, you can directly write content to a file.
+Make sure to use the correct mode to open the file (here 'a' for appending content).
+###############################################################################
+List creation
+l = [('Hi '+ x) for x in ['Alice', 'Bob', 'Pete']]
+# print(l) >> ['Hi Alice', 'Hi Bob', 'Hi Pete']
+Lists can be dynamically created from other lists with the inline for loop.
+You can directly modify the values, like string concatenation in this example.
+###############################################################################
+Write string to file
+with open('file.txt', 'a') as f: f.write('hello world')
+# print(list(open('file.txt'))) >> ['test1\n', 'test2\n', 'test3\n',
+# 'test4\n', 'hello world']
+With the help of the with statement, you can directly write content to a file.
+Make sure to use the correct mode to open the file (here 'a' for
+appending content).
+###############################################################################
+#Read file into array of lines
+c = [line.strip() for line in open('file.txt')]
+# print(c) >> ['test1', 'test2', 'test3', 'test4']
+# With Pythons inline for loop you can easily read a file into an array of
+# lines. The strip() is needed to remove the trailing line breaks.
+# If you want to keep them or they don't matter to you,
+# you can use an even shorter one-liner:
+c = list(open('file.txt'))
+# print(c) >> ['test1\n', 'test2\n', 'test3\n', 'test4\n']
+It's really that simple to read a file in Python. Side note: you can also
+use the readlines() method if you like.
+###############################################################################
+#Delete multiple elements
+a = [1,2,3,4,5]
+del a[::2]
+# print(a) >> [2, 4]
+###############################################################################
+#Multiple variable assignment
+a, b, *c = [1,2,3,4,5]
+# print(a,b,c) >> 1 2 [3, 4, 5]
+###############################################################################
+Conditional Expressions.
+number = count if count % 2 else count - 1
+
+###############################################################################
+Create a file named
+~/.ctags
+(if you don't already have it) and place the following line into it:
+--python-kinds=-i
+
+Rerun ctags.
+ctags -R
+
+ This tells ctags to stop marking imports as tags.
+ctags allows convenient configuration of such things, and you can examine
+these settings by using the --list-kinds argument.
+For example after adding the import exclusion line, I get:
+
+src$ ctags --list-kinds=python
+c  classes
+f  functions
+m  class members
+v  variables
+i  imports [off]
+###############################################################################
+To customise pycodestyle we can configure it at the project-level or in
+user-level. It is better to configure at the project level as the style
+usually varies for every-project.
+
+To configure pycodestyle create a tox.ini Or a setup.cfg
+
+And add
+
+[pycodestyle]
+ignore = E501, W291
+max-line-length = 88
+statistics = True
+
+[flake8]
+ignore = E111, E114, D203
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist, *migrations*
+max-complexity = 10
+
+[pep8]
+ignore = E111, E114, E226,E302,E41
+ max-line-length = 160
+###############################################################################
+Format python code
+yapf --in-place --recursive  --style='{based_on_style: google, indent_width: 2}' *.py
+
+###############################################################################
+bpytop Resource monitor that shows usage and stats for processor,
+memory, disks, network and processes.
+###############################################################################
+List comprehension is a concise way of creating lists. Say you want to filter unout all customers from your database who earn more than $1,000,000. This is what a newbie not knowing list comprehension would do:
+
+# (name, $-income)
+customers = [("John", 240000),
+             ("Alice", 120000),
+             ("Ann", 1100000),
+             ("Zach", 44000)]
+
+# your high-value customers earning >$1M
+whales = []
+for customer, income in customers:
+    if income>1000000:
+        whales.append(customer)
+print(whales)
+# ['Ann']
+This snippet needs four lines just to create a list of high-value customers (whales)!
+
+If you do that in your public Python code base, be prepared to get busted for “not writing Pythonic code”. 😉
+
+Instead, a much better way of doing the same thing is to use list comprehension:
+
+whales = [x for x,y in customers if y>1000000]
+print(whales)
+# ['Ann']
+###############################################################################
+Make a script both
+importable and executable
+ if __name__ == '__main__':
+
+def main():
+ print('Doing stuff in module', __name__)
+
+if __name__ == '__main__':
+ print('Executed from the command line')
+ main()
+
+$ python mymodule.py
+Executed from the command line
+Doing stuff in module __main__
+
+>>> import mymodule
+>>> mymodule.main()
+Doing stuff in module mymodule
+###############################################################################
+###############################################################################
+# Import the NumPy library
+import numpy as np
+# Create the list of lists
+lst = [[1, 2, 3], [4, 5], [6, 7, 8]]
+# Convert it to a NumPy array
+a = np.array([np.array(x) for x in lst])
+# Print the resulting array
+print(a)
+	'''
+[array([1, 2, 3]) array([4, 5]) array([6, 7, 8])]
+''
+	'''
+###############################################################################
+# Import the NumPy library
+import numpy as np
+
+# Create the list of lists
+lst = [[1, 2, 3], [4, 5, 6]]
+
+# Convert it to a NumPy array
+a = np.array(lst)
+
+# Print the resulting array
+print(a)
+	'''
+[[1 2 3]
+ [4 5 6]]
+''''''
+	'''
+
+###############################################################################
+
+Convert List of Lists to One List
+Say, you want to convert a list of lists [[1, 2], [3, 4]] into
+a single list [1, 2, 3, 4]. How to achieve this? There are different options:
+
+lst = [[1, 2], [3, 4]]
+
+# Method 1: List Comprehension
+flat_1 = [x for l in lst for x in l]
+
+# Method 2: Unpacking
+flat_2 = [*lst[0], *lst[1]]
+
+# Method 3: Extend Method
+flat_3 = []
+for l in lst:
+    flat_3.extend(l)
+
+
+## Check results:
+print(flat_1)
+# [1, 2, 3, 4]
+
+print(flat_2)
+# [1, 2, 3, 4]
+
+print(flat_3)
+# [1, 2, 3, 4]
+###############################################################################
+Convert List of Lists to Dictionary
+persons = [['Alice', 25, 'blonde'],
+           ['Bob', 33, 'black'],
+           ['Ann', 18, 'purple']]
+persons_dict = dict((x[0], x[1:]) for x in persons)
+print(persons_dict)
+# {'Alice': [25, 'blonde'],
+#  'Bob': [33, 'black'],
+#  'Ann': [18, 'purple']}
+###############################################################################
+to convert each element in your list to a tuple. This works also
+for list of lists with varying number of elements.
+lst = [[1, 2, 1], [3, 4, 3], [5, 6, 5]]
+tuples = [tuple(x) for x in lst]
+print(tuples)
+# [(1, 2, 1), (3, 4, 3), (5, 6, 5)]
+
+lst = [[1], [2, 3, 4], [5, 6, 7, 8]]
+tuples = [tuple(x) for x in lst]
+print(tuples)
+# [(1,), (2, 3, 4), (5, 6, 7, 8)]
+
+
+###############################################################################
+This is the best and most Pythonic way to print a Python list.
+# Create the Python List
+lst = [1, 2, 3, 4, 5]
+
+# Use three underscores as separator
+print(*lst, sep='___')
+# 1___2___3___4___5
+
+# Use an arrow as separator
+print(*lst, sep='-->')
+# 1-->2-->3-->4-->5
+###############################################################################
+How to remove all duplicates of a given value in the list?
+Efficient Method: A shorter and more concise way is to create a dictionary out of the elements in the list to remove all duplicates and convert the dictionary back to a list. This preserves the order of the original list elements.
+
+lst = ['Alice', 'Bob', 'Bob', 1, 1, 1, 2, 3, 3]
+print(list(dict.fromkeys(lst)))
+# ['Alice', 'Bob', 1, 2, 3]
+Convert the list to a dictionary with dict.fromkeys(lst).
+Convert the dictionary into a list with list(dict).
+Each list element becomes a new key to the dictionary. For example, the list [1, 2, 3]
+###############################################################################
+Find the current directory
+
+Often useful to know what directory the user is in, or what directory the
+script being called is in. These useful tools rely on the following modules:
+
+import os
+
+print(os.getcwd()) # /gpfsm/dnb53/ntausnev/RUNS_ME/Eh212Toma_2xCO2a/00ACC
+
+os.chdir(r'/discover/nobackup/ntausnev/MEs')  # change dir
+print(os.getcwd())  # /gpfsm/dnb53/ntausnev/MEs
+
+os.mkdir() and  os.makedirs():
+os.mkdir("test")                          # create dir in current dir
+path = r'C:\Users\mike\Documents\pytest'  # New abs path
+# Create new dirs if does not exists:
+os.makedirs('/discover/nobackup/ntausnev/Z_Deleted_Files/zzz_tnl/ptest/dir1/dir2/dir3')
+
+os.remove() and  os.rmdir():
+os.remove("test.txt")
+os.rmdir("pytest")
+os.rmdir("/discover/nobackup/ntausnev/Z_Deleted_Files/zzz_tnl/ptest/dir1/dir2/dir3") # Only empty dir
+# Recurcevely only empty dirs
+os.removedirs("/discover/nobackup/ntausnev/Z_Deleted_Files/zzz_tnl/ptest/dir1/dir2")
+
+os.rename(src, dst) :
+os.rename("test.txt", "pytest.txt")
+
+os.walk(): ===>  shows files and dirs:
+The os.walk() function retrieves a list of files contained within a tree.
+The method iterates over each directory in a tree. Then, os.walk()
+returns the name of every file and folder within a directory and any
+of its subdirectories.
+
+p = "/discover/nobackup/ntausnev/RUNS_ME/Eh212Toma_2xCO2a/00ACC"
+for root, dirs, files in os.walk(p):
+  print(root)
+
+/discover/nobackup/ntausnev/RUNS_ME/Eh212Toma_2xCO2a/00ACC
+/discover/nobackup/ntausnev/RUNS_ME/Eh212Toma_2xCO2a/00ACC/accEh212Toma_2xCO2a_3010-3019
+/discover/nobackup/ntausnev/RUNS_ME/Eh212Toma_2xCO2a/00ACC/accEh212Toma_2xCO2a_3020-3029
+...
+
+import os
+
+path = '/home/data_analysis/netflix'
+
+for root, directories, files in os.walk(path, topdown=False):
+	for name in files:
+		print(os.path.join(root, name))
+	for name in directories:
+		print(os.path.join(root, name))
+
+
+
+
+###############################################################################
+Find the script name and directory
+
+The variable sys.arg[] holds the values of the command-line arguments, but it
+also contains the name of the script being executed. With some of the methods
+supplied with the os object, it is a simple matter to discover the name of the
+executing script, it's full pathname, and consequently the directory in which
+it resides:
+
+print 'sys.argv[0] =', sys.argv[0]
+print 'full path =', os.path.abspath(sys.argv[0])
+print 'directory = ', os.path.dirname(os.path.abspath(sys.argv[0]))
+Find the current working directory
+
+###############################################################################
+I often want to use the current working directory as the place to start looking
+ for input files, or to put files generated by the program:
+
+print os.getcwd()
+###############################################################################
+Working with directories and filenames
+
+Walking through a directory
+
+Very easy to traverse a directory, picking out filenames within ...
+
+for filename in os.listdir(dir):
+    # clever code here
+Clever things to do with filenames
+
+###############################################################################
+Split the full pathname into path and filename:
+
+>>> os.path.split('/home/malcolm/thing1.txt')
+('/home/malcolm', 'thing1.txt')
+>>> (filepath, filename) = os.path.split('/home/malcolm/thing1.txt')
+>>> filename
+'thing1.txt'
+>>> filepath
+'/home/malcolm'
+###############################################################################
+Split the filename into basename and extension...
+
+>>> (shortname, extension) = os.path.splitext(filename)
+>>> shortname
+'thing1'
+>>> extension
+'.txt'
+###############################################################################
+Working with files
+
+Read a whole file into a string
+
+>>>f = open(infile)
+>>>instring = f.read()
+###############################################################################
+Read a file one line at a time
+
+Useful for processing very large files.
+
+import fileinput
+for line in fileinput.input(['myfile']):
+    do_something(line)
+Example: To read this huge sql file in line by line, and output a count
+of the lines:
+
+for line in fileinput.input(infile):
+    linecount += 1
+
+output = str(linecount)
+###############################################################################
+Executing programs from within Python
+
+This is a core part of my plan to import lots of geodata into the database:
+I have to be able to call shp2pgsql -c filename from inside a script which
+iterates through the data collection directories. And it is remarkably easy:
+
+>>>import os
+>>>os.system('shp2pgsql -c filename')
+This will dump a whole lot of SQL into stdout, so I will have to redirect the output to a file, pipe it to pgsql, or capture it into a Python variable for further processing:
+
+Option 1: redirect to file:
+>>>os.system('shp2pgsql -c filename > file.sql')
+
+Option 2: pipe to pgsql:
+>>>os.system('shp2pgsql -c BA31/coastline public.coastline | psql -h aoraki -U malcolm -d malcolm_spatial')
+                           shapefile      schema.table    pipe       server    user       database
+
+Option 3: capture to a variable:
+>>>sql = os.popen('shp2pgsql -c filename')
+Executing shell scripts from Python
+
+###############################################################################
+You can call any shell command from within a Python program using the
+subprocess module:
+
+import subprocess
+subprocess.call("ls -l", shell=True)
+You need the second argument shell=True otherwise Python will throw an error.
+
+That little script prints the output of the ls command to the screen. I presume
+you can capture this into a variable or split it as a list or whatever you want
+to do.
+
+Bear in mind that Python has many commands which will perform these functions
+more efficiently than calling bash programs, but I want to use this module to
+execute a series of calls to programs such as whois and nmap for my scanback
+program.
+
+References
+
+Gift, Noah (2008-02-07) Python for Bash scripters: A well-kept secret
+Accessed 2011-10-26 from http://magazine.redhat.com/2008/02/07/python-for-bash-scripters-a-well-kept-secret/
+
+Pilgrim, Mark (2004) Dive into Python: 6.5. Working with Directories
+Accessed 2011-08-23 from http://diveintopython.org/file_handling/os_module.html
+
+###############################################################################
+IPython:
+
+function pandas_matplotlib
+{
+   module purge
+   export LD_LIBRARY_PATH=""
+   module load other/SSSO_Ana-PyD/SApd_1.8.0
+
+} #end function pandas_matplotlib
+######################################
+
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+import matplotlib.pyplot as plt
+
+result = pd.read_table('ann_Eh166.txt',sep='\s+',skiprows=[1,2])
+result
+result.loc[:,['Time','Atl_(45N)']]
+
+###############################################################################
+#
+As a beginner, or someone has just switched from other languages that use +
+to join strings, it is very easy to write code like this:
+str1 = "I love "
+str2 = "Python."
+print(str1 + str2)
+
+As you use Python more and more, you may realise that someone else prefers
+to use the join() method like this:
+str1 = "I love "
+str2 = "Python."
+print(''.join([str1, str2]))
+
+Nevertheless, one time I need to join multiple strings in a list.
+strs = ['Life', 'is', 'short,', 'I', 'use', 'Python']
+Initially, I have done it like this:
+strs = ['Life', 'is', 'short,', 'I', 'use', 'Python']
+def join_strs(strs):
+    result = ''
+    for s in strs:
+        result += ' ' + s
+    return result[1:]
+join_strs(strs)
+
+In this example, I have to write a for-loop to join the strings one by one.
+Also, the result string needs to be trimmed a white space I added at
+the beginning because all the strings need to be added a white space
+in the front, but not the first one. You may have other solutions
+such as adding an index to the for loop so that the string at
+the index = 0 should not be added this white space. Anyway, you will still
+need this for-loop and do something for the white spaces.
+After that, I recalled that I seen the .join() method before,
+maybe this is the time that I need to use it!
+
+def join_strs_better(strs):
+  return ' '.join(strs)
+
+join_strs_better(strs)
+
+How easy it is! One line of code does everything. Since the .join() method
+is called by a string object, the string object will be utilised to join
+every string in the list, so you don’t need to worry about
+the white spaces at the beginning.
+###############################################################################
+# Create a list of customers
+c = ['Alice', 'Bob', 'Frank', 'Ann']
+
+# Extract all names of customers starting with 'A'
+indices_of_A = [c.index(x) for x in c if x[0] == 'A']
+
+# Print the resulting customers
+print(list(c[i] for i in indices_of_A))
+###############################################################################
+import pathlib
+
+path = pathlib.Path('music.mp3')
+print(path.exists()) # True
+print(path.is_file()) # True is the file not dir
+###############################################################################
+from pathlib import Path
+
+root = Path('post_sub_folder')
+print(root)
+# post_sub_folder
+
+path = root / 'happy_user'
+# Do abs path
+print(path.resolve())
+# /home/weenkus/post_sub_folder/happy_user
+###############################################################################
+#Reaf file line by line:
+with open("/path/to/file") as f:
+    for line in f:
+        print(line)
+###############################################################################
+
+###############################################################################
+I don't want to accidentally publish an unfinished article,
+so I wrote a Python script that lists any TODOs  strings
+and which lines they appear on:
+
+with open("article.txt") as file:
+    for line_number, line in enumerate(file, start=1):
+        if "TODO" in line:
+            print("line", line_number, ":", line)
+###############################################################################
+... But this gives me no feedback about the script's progress. The script could hang and I wouldn't notice. To fix this, I use enumerate to count how many records I've processed and output that information as the script executes.
+
+for i, record in enumerate(download_records(), start=1):
+    print("processing record", i)
+    result = process_record(record)
+    export_result(result)
+print("done")
+Running this immediately starts to give me feedback:
+
+processing record 1
+processing record 2
+processing record 3
+processing record 4
+...
+processing record 1443803
+done
+I also use two variations of this technique:
+
+Printing out every X steps (e.g. 10,000 steps), because sometimes printing out information on every step substantially slows my code down.
+Printing out a percentage if I know an upper bound on how many steps my code will take.
+for i, record in enumerate(download_records(), start=1):
+    if i % 10_000 == 0:
+        print("processed", i, "records")
+    result = process_record(record)
+    export_result(result)
+print("done")
+
+processed 10000 records
+processed 20000 records
+...
+
+###############################################################################
+x = 0.3037385937020861
+format(x, ".2f")
+'0.30'
+###############################################################################
+Creating a Directory: mkdir(path)
+
+import os
+pdir = "/discover/nobackup/ntausnev/Z_Deleted_Files/zzz_tnl"
+try:
+  os.mkdir(pdir)
+except FileExistsError:
+  print(f"Directory {pdir} already exists")
+
+###############################################################################
+Deleting a directory: rmdir(path) :
+
+pdir = "/discover/nobackup/ntausnev/Z_Deleted_Files/zzz_tnl"
+try:
+  os.rmdir(pdir)
+except:
+  print(sys.exc_info())
+###############################################################################
+Printing current working directory: getcwd()
+os.getcwd() returns the current working directory as a string
+print(os.getcwd())
+
+###############################################################################
+Copying file: copyfile(source, destination)
+
+Copying file: copyfile(source, destination)
+Use shutil copyfile() method to copy files from a source file to a destination file. The destination should be the complete target filename.
+Code below copies one file at a time from base_dir to the dest_dir. We use os.path.join() to join the directory and the filename.
+from  shutil import copyfile
+try:
+  base_dir = "/discover/nobackup/ntausnev/Z_Deleted_Files/z_trash"
+  dest_dir = "/discover/nobackup/ntausnev/Z_Deleted_Files/z_tnl"
+  for file in os.listdir(base_dir):
+    copyfile(os.path.join(base_dir, file), os.path.join(dest_dir, file))
+except:
+  print(sys.exc_info())
+
+###############################################################################
+Handling the errors while changing the directory
+
+
+# importing all necessary libraries
+import sys, os
+
+# initial directory
+cwd = os.getcwd()
+
+# some non existing directory
+fd = 'false_dir / temp'
+
+# trying to insert to flase directory
+try:
+  os.chdir(fd)
+  print("Inserting inside-", os.getcwd())
+
+# Caching the exception
+except:
+  print("Something wrong with specified\
+    directory. Exception- ", sys.exc_info())
+
+# handling with finally
+finally:
+  print("Restoring the path")
+  os.chdir(cwd)
+  print("Current directory is-", os.getcwd())
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+

@@ -1,0 +1,46 @@
+
+================================================================================
+If you often write small bash scripts to automate/facilitate repeating tasks, 
+you don't want to lose time re-implementing option parsing, debug messages, 
+OS detection, confirmation questions.
+To create a new stand-alone SCRIPT (just a xyz.sh script), 
+with option parsing, color
+https://github.com/pforret/bashew
+https://toolstud.io/bash/boilerplate.php
+
+https://www.damonyuan.com/blogs/tech/2019/2019-04-09-new-script.html
+================================================================================
+bash unit testing enterprise edition framework for professionals
+https://github.com/pgrange/bash_unit/blob/master/bash_unit
+https://raw.githubusercontent.com/pgrange/bash_unit/master/bash_unit
+Examples:
+pretty_failure() {
+  pretty_format "$RED" "\u2717" "${1:-}"
+}
+
+
+================================================================================
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+

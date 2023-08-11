@@ -1,0 +1,28 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+export BASH_HOME="${HOME}/BASH_HOME"
+export DOT_DIR="${BASH_HOME}/DOT_DIR"
+
+[ -r "${DOT_DIR}/bash_0.sh" ] && source "${DOT_DIR}/bash_0.sh"
+
+eval "$(fasd --init auto)" # The same as Fedora???
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/local/other/python/GEOSpyD/2019.10_py3.7/2020-01-15/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/local/other/python/GEOSpyD/2019.10_py3.7/2020-01-15/etc/profile.d/conda.sh" ]; then
+        . "/usr/local/other/python/GEOSpyD/2019.10_py3.7/2020-01-15/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/local/other/python/GEOSpyD/2019.10_py3.7/2020-01-15/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

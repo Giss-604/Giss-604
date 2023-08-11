@@ -1,0 +1,22 @@
+set guifont=DejaVu\ Sans\ Mono\ Book\ 18
+"set guifont=Liberation\ Mono\ 15
+ 
+" color scheme of the moment:
+syntax on
+colorscheme zaibatsu 
+
+"au BufRead * let &numberwidth = float2nr(log10(line("$"))) + 2
+"          \| let &columns = &numberwidth + 80
+set lines=34 columns=120
+set laststatus=2 " enables the status line at the bottom 
+
+"-------------------------------------------------------------------------------
+" Status line & Title string formats
+" "-------------------------------------------------------------------------------
+" set statusline=%<%t%h%m%r 
+" set statusline+=%=%([%{Tlist_Get_Tagname_By_Line()}]%)   " current tag in
+" status line
+" set statusline+=\ %=0x%B\ %l,%c%V\ %P
+" set titlestring=%t%(\ %m%)%(\ %r%)%(\ %h%)%(\ %w%)%(\
+" (%{expand(\"%:p:~:h\")})%)\ -\ VIM
+" "

@@ -1,0 +1,179 @@
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+dnf clean metadata && dnf update -y
+================================================================================
+
+Find path ksh:
+$ grep ksh /etc/shells
+
+Superuser (root) may change the login shell for any account using any one of the following syntax:
+$ sudo chsh -s /bin/ksh username
+
+OR
+$ su -
+# chsh -s /bin/ksh username
+===============================================================================
+Start totalViewer on fedora
+setsebool -P mmap_low_allowed 1
+===============================================================================
+Remove repository:
+cd /etc/yum.repos.d
+If RPM-package not found then simply remove repo file with following command:
+rm /etc/yum.repos.d/repo-file.repos
+
+===============================================================================
+scp files to/from discover:
+ssh-keygen -t rsa -b 4096 -C "ntausnev@gmail.com" ==> two files created:
+-rw-r--r--.  1 tnl  tnl   744 Apr 14 17:15 id_rsa.pub
+-rw-r--r--.  1 tnl  tnl  3381 Apr 14 17:15 id_rsa
+
+Appends id_rsa.pub file from local client(fedora)
+to authorized_keys on discover
+/home/ntausnev/.ssh/authorized_keys (discover)  <== /home/tnl/.ssh/id_rsa.pub
+( ??? to copy the key to the remote server. 
+This is done with the command:
+ssh-copy-id ntausnev@login.nccs.nasa.gov ??? )
+
+Then create file
+$ ls -la /home/tnl/.ssh/config
+-rw-r--r--. 1 root root 168 Apr 15 13:46 /home/tnl/.ssh/config
+
+$ more  /home/tnl/.ssh/config:
+host discover.nccs.nasa.gov dirac.nccs.nasa.gov dali.nccs.nasa.gov
+User ntausnev
+LogLevel Quiet
+ProxyCommand ssh -l ntausnev login.nccs.nasa.gov direct %h
+Protocol 2
+
+Local file to discover:
+scp -v ./tn_diff.sh  ntausnev@discover.nccs.nasa.gov:/discover/nobackup/ntausnev/Z_Deleted_Files/.
+
+Remote file(discover) to local machine:
+scp -v ntausnev@discover.nccs.nasa.gov:/discover/nobackup/ntausnev/Z_Deleted_Files/tn_diff.sh tn_diff.sh_ssh
+===============================================================================
+If we need to see all the repositories that are either
+enabled or disabled, we need to run following
+
+$ sudo dnf repolist all
+===============================================================================
+ Installing a package
+ sudo dnf install httpd
+
+ Removing a package
+ $ sudo dnf remove httpd
+===============================================================================
+Search for packages
+$ sudo dnf search net-tools
+===============================================================================
+Get list of all available packages from repositories
+$ dnf list available | more
+===============================================================================
+A list of installed packages on the system
+dnf list installed
+===============================================================================
+Show all installed as well as available packages
+ dnf list
+===============================================================================
+To use a particular repository for installing a package, run
+$ sudo dnf install --enablerepo=epel mysql
+===============================================================================
+To use a particular repository for installing a package, run
+$ sudo dnf install --enablerepo=epel mysql
+===============================================================================
+View package information
+$ dnf info cronie
+===============================================================================
+Orphan packages are those packages that were once installed to satisfy
+dependency for some other package but are not required now.
+To remove such packages, run
+dnf autoremove
+===============================================================================
+To get a list of all the available options that can be used with DNF, run
+$ dnf help
+===============================================================================
+To install Skype using the Skype RPM repository:
+
+Add the Skype repository
+
+$ sudo curl -o /etc/yum.repos.d/skype-stable.repo \
+       https://repo.skype.com/rpm/stable/skype-stable.repo
+
+Install Skype
+$ sudo dnf install skypeforlinux
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
+#################################################################################################
+Installing Skype using the Skype RPM repository
+
+To install Skype using the Skype RPM repository:
+
+    Add the Skype repository
+
+    $ sudo curl -o /etc/yum.repos.d/skype-stable.repo https://repo.skype.com/rpm/stable/skype-stable.repo
+
+    Install Skype
+
+    $ sudo dnf install skypeforlinux
+#################################################################################################
+sudo tee /etc/yum.repos.d/AnyDesk-Fedora.repo <<EOF
+[anydesk]
+name=AnyDesk Fedora - stable
+baseurl=http://rpm.anydesk.com/fedora/x86_64/
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=https://keys.anydesk.com/repos/RPM-GPG-KEY
+EOF
+#################################################################################################
+This is a working setting to make cursor shape block in insert mode:
+
+set guicursor=n-v-c-i:block
+which means to make cursor shape block in normal, visual, command, 
+and insert mode. For more details, please use :h 'guicursor'.
+
+lua workaround vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+#
+#################################################################################################
+# Generating a new SSH key
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+# Add your SSH private key to the ssh-agent
+ssh-add ~/.ssh/id_rsa
+
+# Adding a new SSH key to your GitHub account
+ 
+#################################################################################################
+xxdiff 
+https://download.copr.fedorainfracloud.org/results/caxica/xxdiff/fedora-38-x86_64/02352008-xxdiff/
+
+
+From : https://copr.fedorainfracloud.org/coprs/caxica/xxdiff/
+[copr:copr.fedorainfracloud.org:caxica:xxdiff]
+name=Copr repo for xxdiff owned by caxica
+baseurl=https://download.copr.fedorainfracloud.org/results/caxica/xxdiff/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/caxica/xxdiff/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
+#################################################################################################
+https://furius.ca/xxdiff/   ---> Manual
+#################################################################################################MELD:
+a preprocessing front end for it, to remove the unimportant differences. It has 
+options to remove comments, whitespace, grep or ignore lines, search/replace, 
+remove timestamps, etc. Afterwards, it runs meld on these intermediate files. 
+https://github.com/koknat/dif 
+Installation is not required, just copy the 'dif' executable dif_meld.pl
+
+#################################################################################################
+#################################################################################################
+#################################################################################################
+#################################################################################################
+
+

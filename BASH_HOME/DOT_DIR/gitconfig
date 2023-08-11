@@ -1,0 +1,30 @@
+[user]
+    email = ntausnev@gmail.com
+    name = tnl
+[cola]
+    spellcheck = false
+[credential]
+    helper = store
+
+[merge]
+    # Change to true if you wish to keep a backup of the files that was merged
+    keepBackup = false;
+    tool = p4merge
+[mergetool]
+    prompt = false
+[mergetool "p4merge"]
+    cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
+[diff]
+    tool = p4merge
+[difftool]
+    prompt = false
+[difftool "p4merge"]
+    cmd = p4merge "$LOCAL" "$REMOTE"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
+
+

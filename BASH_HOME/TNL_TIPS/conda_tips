@@ -1,0 +1,18 @@
+conda env list
+conda deactivate
+conda activate py39
+
+On discover:
+conda info --envs
+conda env list
+source activate /discover/nobackup/ntausnev/anaconda3/envs/py39
+
+The most common reason for this error is that the numpy package 
+is not installed in your environment or an outdated version is 
+installed. So let’s update the package or install it if it’s missing:
+
+python3 -m pip install -U numpy
+python3 -m pip install -U matplotlib
+python3 -m pip install -U pandas
+
+

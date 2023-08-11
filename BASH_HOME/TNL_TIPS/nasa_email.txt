@@ -1,0 +1,40 @@
+. Power ON
+2. Select Nikolai Tausnev
+3. OLD NDC password: endmarT#2019
+4. Waiting load bar / black sreen
+5. NASA Agreement ===> Accept
+6. Select Nikolai Tausnev
+7. Insert Smart Card
+8. Wait the PIN
+9. Print PIN
+10. Cancel  icon with "Login Keychain"
+11. Click  FINDER==> GO ==> Applications
+12. In Search (right upper field) print word "key"
+13. Click Keychaim Access
+14. UPPER bar after sign "APPLE" select Keychain Access ==> Preferences
+15. In new form Preferences click Reset My Default Keychains
+16. Print NEW  NDC password: Apr2domoi#19
+
+ANY CONECT from Sysco:
+1. Select AnyConnect from bottom
+2. In new icon with VPN select Connect
+3. Put Smart Card in card reader ( if it is already inserted )
+4. Print PIN:
+5. See new "wheel" symbol on AnyConnect icon
+6. Cisco Anyconnect Banner ==> Accept
+7. See new "lock" symbol on AnyConnect icon
+
+Enterprise connectPKI:
+1. Go to top and select gray key icon
+2. Select Reconnect
+3. Show legacy certificates highlight " NT" and Select
+4. Enterprise Connect PKI with NT Username ntausnev: click Sign In
+5. Make sure that key symbol is BLACK
+
+CHROME:
+1. Open Chrome: webmail.nasa.gov
+2. Print PIN
+3. Print nikolai.l.tausnev@nasa.gov
+
+
+
