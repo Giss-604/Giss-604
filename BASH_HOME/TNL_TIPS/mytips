@@ -17,6 +17,21 @@ On Oracle Linux
 "p4merge" is installed in /opt
 To use it: LD_LIBRARY_PATH=/opt/p4v-2023.2.2446649/lib/ 
 /opt/p4v-2023.2.2446649/bin/p4merge
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+In command mode, you can use >> to indent a single line. 
+4>> will indent the current and next three lines.
+
+If you don't know how many lines in advance (it may be quite large), 
+you can use ranges. Go to the first line of the range and enter 
+ma to place marker A. Then go to the last line and enter >'a 
+to indent from here to marker A. You can do all sorts of 
+wonderful things with ranges.
+
+How they're indented depends on a couple of things like 
+your shiftwidth settings. I always have my shiftwidth and tabstop settings the same to avoid problems:
+
+:set ts=4 sw=4
 
 ///////////////////////////////////////////////////////////////////////////////////
 Print file up to some pattern: deletes line to end
@@ -578,6 +593,15 @@ Repeack the out.nc after averaging-out the level dimension with )€œlev)
 $ ncks -C -O -x -v lev in.nc out.nc
 Delete dimension
 $ ncwa -a lev in.nc out.nc
+
+This works pretty well, if you want to print just the values of
+var1 and var2 from netCDF file foo.nc:
+
+  ncdump -v var1,var2 foo.nc | sed -e '1,/data:/d' -e '$d'
+
+It eliminates all the header info and the last line that's just "}".
+It doesn't work for netCDF-4 files that have nested groups.
+
 
 //////////////////// FERRET  ///////////////////////////////////////////////////////
 Horizontal interpolation
