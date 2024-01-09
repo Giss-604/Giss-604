@@ -1,0 +1,16 @@
+#!/bin/bash
+#Get inputs into an Array in Bash
+
+file="abc.txt"
+file="$0"
+my_arr=()
+
+mapfile -t my_arr <"$file"
+printf "\nEntered elements are: \n"
+printf '%s\n' "${my_arr[@]}" # each value from new line
+printf "\nEntered elements are as one line: \n"
+printf '%s\n' "${my_arr[*]}" # as one line
+
+#create empty bash array:
+#my_array=()
+#my_array+=("new_value") # added new element
