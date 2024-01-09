@@ -1,5 +1,5 @@
 ##!/usr/bin/env sh
-#bash_export.sh
+#.bash_export.sh
 #
 printf "\n  %s\n" "+++ Start source file bash_export.sh +++"
 ################################################################################
@@ -13,6 +13,7 @@ export PATH="${PATH}:${TNL_BIN}"
 
 export TNL_SCRIPTS="${BASH_HOME}/TNL_SCRIPTS"
 export PATH="${PATH}:${TNL_SCRIPTS}"
+export PATH="$HOME/.local/bin:${PATH}" # Lunarvim
 
 export TNL_TIPS="${BASH_HOME}/TNL_TIPS"
 
@@ -134,6 +135,9 @@ function set_Oracle() {
 	export RUST_HOME="/usr/bin"
 	export TRASH_DIR="/home/ntausnev/TRASH_DIR"
 	alias nvim="/usr/bin/nvim -c 'set guicursor=n-v-c-i:block' "
+	alias nvim="/opt/nvim-0.9.4/bin/nvim "
+        alias lvim="/home/ntausnev/.local/bin/lvim" # Lunarvim it may be general
+        alias avim="nvim -u /home/ntausnev/.config/astronvim/entry.lua " # Astronvim
 	alias ok="/usr/bin/okular "
 	export P4merge="/opt/p4v-2023.2.2446649/bin"
 	export PATH="$PATH:${P4merge}"
