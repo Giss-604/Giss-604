@@ -6,6 +6,7 @@ dnf install mozilla-fira-mono-fonts
 dnf install google-droid-sans-mono-fonts
 dnf install dejavu-sans-mono-fonts
 
+Hack
 A typeface designed for source code
 Hack is designed to be a workhorse typeface for source code:
 https://github.com/source-foundry/Hack?tab=readme-ov-file
@@ -20,7 +21,12 @@ You can confirm that the fonts are installed with the following command:
 
 $ fc-list | grep "Hack"
 
+---------------------------------------------------
+desktop’s default font on Fedora 39 is perfect (Noto fonts are now 
+the default for languages using the Indic script). 
+But if you crave more, here are some of the cool fonts you can install. 
 
+dnf install -y 'google-roboto*' 'mozilla-fira*' fira-code-fonts
 
 
 # getNF
