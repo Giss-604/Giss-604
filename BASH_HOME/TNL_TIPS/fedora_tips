@@ -1,8 +1,82 @@
 ================================================================================
+Fedora 39 After Install Guide:
+https://www.hackingthehike.com/fedora39-guide/
 ================================================================================
+20 Things You MUST DO After Installing Fedora 39 (RIGHT NOW!):
+https://www.youtube.com/watch?v=a3ePEjpg3lU
 ================================================================================
+Things to do after installing Fedora 39 Workstation
+https://www.linkedin.com/pulse/things-do-after-installing-fedora-38-workstation-karol-stefan-danisz
 ================================================================================
+Linux distros have frequent updates, patches, and feature upgrades. 
+Its always important to keep software up to date for security reasons 
+but its even more important with a fresh install. If its been a while since 
+the distro was released, some of the packages may be feeling a little exposed.
+Get them up to date before doing anything else.
+
+dnf -y upgrade --refresh
 dnf clean metadata && dnf update -y
+
+
+Enable RPM Fusion
+RPM Fusion offers packages that cannot be offered in the
+ official Fedora repos due to various reasons, such as non 
+free or proprietary licensing. These instructions are kindly 
+borrowed from RPM Fusion. An RPM is also available that 
+will enable these repos. This command enables free and non free repos.
+
+dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+Update the system before installing the tainted free and tainted non free repos. The tainted free repo provides DVD playback support. Tainted non free contains non FOSS software and hardware drivers.
+
+dnf upgrade --refresh
+dnf -y groupupdate core
+dnf install -y rpmfusion-free-release-tainted
+dnf install -y rpmfusion-nonfree-release-tainted 
+dnf install -y dnf-plugins-core
+================================================================================
+Multimedia
+VLC handles most multimedia, but I still prefer to add additional codec support whenever possible.
+
+For DVD playback, install the libdvdcss package. Requires the previously mentioned tainted free repo.
+
+dnf install -y libdvdcss 
+
+The following command will adds packages for gstreamer enabled applications. This enables playback of multimedia files. Names like bad and ugly refer to patent and licensing status.
+
+sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
+
+sudo dnf install lame\* --exclude=lame-devel
+
+sudo dnf groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+This package install complement packages needed by some applications for sound and video.
+
+sudo dnf -y groupupdate sound-and-video
+OpenH264 is used for H.264/MPEG-4 media playback. Adding this can enhance your web browsing experience. Enable OpenH264 support in Firefox by adding the repo and installing the plugin.
+
+sudo dnf config-manager --set-enabled fedora-cisco-openh264
+sudo dnf install -y gstreamer1-plugin-openh264 mozilla-openh264
+After installing OpenH264, open Firefox and navigate to Menu > Add-ons and themes > Plugins. Enable the OpenH264 plugin . Verify the plugin is working correctly.
+
+Run a system update again with support for additional multimedia codecs this time.
+
+sudo dnf group upgrade --with-optional Multimedia
+================================================================================
+Bitwarden is an open source password manager akin to LastPass or 1Pass. It integrates with autofill on Android. It syncs passwords across Android, Linux, ,iOS, OS X, and Windows. Bitwarden can be installed through AppImage, DEB, Flatpak, RPM, and Snap. DEB and RPM packages do not auto update. CLI Tools are available along with browser extensions. The Flatpak version is an unofficial release.
+
+flatpak install flathub com.bitwarden.desktop
+
+sudo snap install bitwarden
+================================================================================
+
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
+================================================================================
 ================================================================================
 
 Find path ksh:
