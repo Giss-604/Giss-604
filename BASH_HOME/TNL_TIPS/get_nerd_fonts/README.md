@@ -1,3 +1,10 @@
+Source Code Pro
+https://adobe-fonts.github.io/source-code-pro/
+https://github.com/adobe-fonts/source-code-pro
+
+
+
+
 # getNF
 
 ## A better way to install NerdFonts
