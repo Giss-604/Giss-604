@@ -38,9 +38,9 @@ in the staging area and the working tree are different.
 It means that the file’s content has been modified in 
 the working tree, but the changes to the file are not staged.
 
-[200~X          Y     Meaning
+X          Y     Meaning
 -------------------------------------------------
-	 [AMD]   not updated
+ [AMD]   not updated
 M        [ MTD]  updated in index
 T        [ MTD]  type changed in index
 A        [ MTD]  added to index
