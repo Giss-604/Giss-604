@@ -7,7 +7,67 @@
  ##############################################################################
  ##############################################################################
  ##############################################################################
- ##############################################################################
+$ git status −−short
+$ git status −s
+The short status of each path is shown as one of the following −
+
+XY PATH
+
+XY is a two−letter status code, where X represents status of 
+the file in the staging area and Y represents status of 
+the file in the working directory. The following table lists 
+the possible values for X and Y.
+Indicator	Interpretation
+‘ ’	Unmodified
+M	Modified signifies that a file has been modified but not yet staged.
+A	Added indicates that a file has been added to the staging area.
+D	Deleted indicates that a file has been deleted from the working directory.
+R	Renamed
+C	Copied
+U	Updated but unmerged
+There can be several combinations of the above indicators 
+depending on the status of a file in each of these areas. 
+
+The status code, ??, represents an untracked file.
+
+$ git status -s
+AM file1.txt
+AM file2.txt
+The output (AM) indicates that the content of the file 
+in the staging area and the working tree are different. 
+It means that the file’s content has been modified in 
+the working tree, but the changes to the file are not staged.
+
+[200~X          Y     Meaning
+-------------------------------------------------
+	 [AMD]   not updated
+M        [ MTD]  updated in index
+T        [ MTD]  type changed in index
+A        [ MTD]  added to index
+D                deleted from index
+R        [ MTD]  renamed in index
+C        [ MTD]  copied in index
+[MTARC]          index and work tree matches
+[ MTARC]    M    work tree changed since index
+[ MTARC]    T    type changed in work tree since index
+[ MTARC]    D    deleted in work tree
+	    R    renamed in work tree
+	    C    copied in work tree
+-------------------------------------------------
+D           D    unmerged, both deleted
+A           U    unmerged, added by us
+U           D    unmerged, deleted by them
+U           A    unmerged, added by them
+D           U    unmerged, deleted by us
+A           A    unmerged, both added
+U           U    unmerged, both modified
+-------------------------------------------------
+?           ?    untracked
+!           !    ignored
+-------------------------------------------------
+
+
+##############################################################################
 How configure P4Merge as merge and diff tool on Linux
 https://gist.github.com/IvanCl4udio/b606735bedcdcdea7cb7a9790d96ca74
 
