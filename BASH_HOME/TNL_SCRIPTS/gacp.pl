@@ -22,21 +22,21 @@ my $DONT_IGNORE;
 my $RELATIVE_PATHS;
 
 my $TOP_LEVEL;
-my $PATH_SEP       = catfile("", "");
 my @ADDED          = ();
 my @EXCLUDED       = ();
-my $COMMIT_MESSAGE = $ENV{GACP_DEFAULT_MESSAGE} || "updated README";
+my $USE_EDITOR_MSG = "GACP_USE_EDITOR";
+my $COMMIT_MESSAGE = $ENV{GACP_DEFAULT_MESSAGE} || $USE_EDITOR_MSG;
 my $MAX_COLS       = 30;
 
 # colors
 my %COLOR = (
-    "GREEN"    => "bright_green",
-    "YELLOW"   => "yellow",
-    "GREY"     => "bright_black",
-    "MAGENTA"   => "bright_magenta",
-    "RED"  => "bright_red",
-    "CYAN"      => "bright_cyan",
-    "BLUE"     => "bright_blue"
+    "GREEN"   => "bright_green",
+    "YELLOW"  => "yellow",
+    "GREY"    => "bright_white",
+    "MAGENTA" => "bright_magenta",
+    "RED"     => "bright_red",
+    "CYAN"    => "bright_cyan",
+    "BLUE"    => "bright_blue"
     );
 
 # git status codes
@@ -54,7 +54,7 @@ sub set_top_level {
 }
 
 sub inside_a_git_repo {
-    return `git rev-parse --is-inside-work-tree 2> /dev/null` eq "true\n"
+    return `git rev-parse --is-inside-work-tree 2> /dev/null` eq "true\n";
 }
 
 # This is used as a Type
@@ -62,17 +62,13 @@ sub inside_a_git_repo {
 sub to_git_file {
     my ($status, $abs_path, $rel_path) = @_;
     # if paths has space in them
-    if ($abs_path =~ m/ /) {
-        $abs_path = q/"/ . $abs_path . q/"/;
-    }
-    if ($rel_path =~ m/ /) {
-        $rel_path = q/"/ . $rel_path . q/"/;
-    }
+    $abs_path = q/"/ . $abs_path . q/"/ if ($abs_path =~ m/ /);
+    $rel_path = q/"/ . $rel_path . q/"/ if ($rel_path =~ m/ /);
 
     return {
-        "status" => $status,
-            "abs_path" => $abs_path,
-            "rel_path" => $rel_path
+        "status"   => $status,
+        "abs_path" => $abs_path,
+        "rel_path" => $rel_path
     }
 }
 
@@ -80,32 +76,24 @@ sub to_git_file {
 # This returns reference to a HASH
 sub arg_to_git_file {
     my ($rel_path) = @_;
-    $rel_path =~ s/^:$PATH_SEP:/$TOP_LEVEL$PATH_SEP/;
+    $rel_path =~ s/^:\/:/$TOP_LEVEL\//;
     return to_git_file("", abs_path($rel_path), $rel_path)
 }
 
-# Read repo_name.ignore file and return file_paths
+# Read config file (gacp.exclude) and return file_paths
 sub get_auto_excluded_files {
     my @auto_excluded_files = ();
-    my $data_dir = ($^O eq "MSWin32") ? $ENV{APPDATA} :
-        catfile($ENV{HOME}, ".config");
-    return () unless $data_dir;
-
     my ($_volume, $_dir, $repo_name) = splitpath($TOP_LEVEL);
-    my $ignore_file = catfile($data_dir, "gacp", $repo_name . ".ignore");
+    my $ignore_file = catfile($ENV{HOME}, ".config", "gacp", "gacp.exclude");
     return () unless (-f $ignore_file);
 
     open(FH, "<", $ignore_file) or die "Unable to open $ignore_file\n";
     while(<FH>) {
-        for ($_) {
-            s/\#.*//;  # ignore comments
-            s/\s+/ /g; # remove extra whitespace
-            s/^\s+//;  # strip left whitespace
-            s/\s+$//;  # strip right whitespace
-            s/\/$//;   # strip trailing slash
-        }
-        next unless $_;
-        push(@auto_excluded_files, $_);
+        s/\#.*//, s/\s+/ /g, s/(^\s+|\s+$)//, s/\/$//;
+        next unless (m/$TOP_LEVEL\s+=/);
+        s/^.*=//, s/,\s+/,/g, s/,+/,/g, s/^\s+//, s/(^,|,$)//g;
+        @auto_excluded_files = split ",";
+        last;
     }
     close(FH);
 
@@ -119,9 +107,7 @@ sub to_git_path {
     return $rel_path if $RELATIVE_PATHS;
 
     my $rel_path_to_top_level = abs2rel($path, $TOP_LEVEL);
-    if ($rel_path =~ m/^\.\./) {
-        $rel_path = ":$PATH_SEP:" . $rel_path_to_top_level;
-    }
+    $rel_path = ":/:" . $rel_path_to_top_level if ($rel_path =~ m/^\.\./);
     return $rel_path
 }
 
@@ -143,9 +129,7 @@ sub parse_git_status {
     for my $line (split "\n", $git_status) {
         my ($status, $file_path) = $line =~ /^\s*([^\s]*?)\s+(.*)$/;
         $file_path =~ s/"//g;
-
         my $abs_path = catfile($TOP_LEVEL, $file_path);
-
         unless (-d $abs_path) {
             push(@git_files,
                  to_git_file($status, $abs_path, to_git_path($abs_path)));
@@ -164,28 +148,24 @@ sub parse_git_status {
 sub is_git_file_in {
     my ($arr_ref, $git_file) = @_;
     my $git_file_path = $$git_file{abs_path};
-    # if files that has spaces in them, remove their quotes
     $git_file_path =~ s/"//g;
 
     for (@$arr_ref) {
         my $file_path = $$_{abs_path};
-
-        # if files that has spaces in them, remove their quotes
         $file_path =~ s/"//g;
-        return 1 if (-f $file_path && $file_path eq $git_file_path);
-
-        # $file_path is a dir
-        my $dir = $file_path . $PATH_SEP;
+        return 1 if ($file_path eq $git_file_path);
+        # if $file_path is a dir
+        my $dir = $file_path . "/";
         return 1 if ($git_file_path =~ m/^$dir/)
     }
-    return 0
+    return 0;
 }
 
 # Returns reference to files_to_add and files_to_exclude
 sub get_added_excluded_files {
     my @files_to_add = ();
     my @files_to_exclude = ();
-    for my $file (@_) {
+    foreach my $file (@_) {
         my $chars = length($$file{rel_path});
         $MAX_COLS = $chars if $chars > $MAX_COLS;
         if (is_git_file_in(\@EXCLUDED, $file)) {
@@ -196,7 +176,7 @@ sub get_added_excluded_files {
             push(@files_to_add, $file);
         }
     }
-    return (\@files_to_add, \@files_to_exclude)
+    return (\@files_to_add, \@files_to_exclude);
 }
 
 sub git_add_commit_push {
@@ -207,7 +187,11 @@ sub git_add_commit_push {
     my $prev_return = system("git add " . $added_files);
     return unless ($prev_return eq "0");
 
-    $prev_return = system("git commit -m '" . $COMMIT_MESSAGE . "'");
+    my $commit_cmd = "git commit";
+    unless ($COMMIT_MESSAGE eq $USE_EDITOR_MSG) {
+        $commit_cmd .= ' -m "' . qq{$COMMIT_MESSAGE} . '"';
+    }
+    $prev_return = system($commit_cmd);
     return unless ($prev_return eq "0" && !$DONT_PUSH);
 
     system("git push");
@@ -257,7 +241,6 @@ sub format_option {
 }
 
 sub print_help_and_exit {
-    # This is a mess
     printf(
         "%s\n\n%s\n\n" .            # About, Usage
         "%s \n%s%s%s%s%s%s%s%s\n" . # Options list
@@ -280,7 +263,7 @@ sub print_help_and_exit {
         format_option("e", "exclude", "Files to exclude (not to add)", 1, 0),
         colored("ARGS:", $COLOR{YELLOW}),
         colored("\t<MESSAGE>", $COLOR{GREEN}),
-        "\t\tCommit message [default: \"updated README\"]",
+        "\t\tCommit message",
         colored("EXAMPLES:", $COLOR{YELLOW}),
         "\tgacp " . colored("\"First Commit\"", $COLOR{BLUE}),
         "\tgacp " . colored("\"updated README\"", $COLOR{BLUE}),
@@ -288,7 +271,7 @@ sub print_help_and_exit {
         "\tgacp " . colored("\"Pushing all except new-file.pl\"", $COLOR{BLUE}),
         "-e " . colored("new-file.pl", "underline"),
         );
-    exit
+    exit;
 }
 
 sub parse_args {
@@ -314,7 +297,7 @@ sub main {
     $COMMIT_MESSAGE = $ARGV[0] || $COMMIT_MESSAGE;
     unless ($DONT_IGNORE) {
         for (get_auto_excluded_files()) {
-            push(@exclude_files, abs2rel($TOP_LEVEL . $PATH_SEP . $_));
+            push(@exclude_files, abs2rel($TOP_LEVEL . "/" . $_));
         }
     }
     @ADDED = map { arg_to_git_file $_ } @add_files;
@@ -323,9 +306,7 @@ sub main {
     my @parsed_git_status = parse_git_status();
 
     if ($LIST) {
-        for my $f (@parsed_git_status) {
-            print $$f{rel_path} . "\n";
-        }
+        print((join "\n", map { $$_{rel_path} } @parsed_git_status) . "\n");
         exit;
     }
 
@@ -334,25 +315,26 @@ sub main {
     my $total_added = scalar(@$files_to_add_ref);
     if ($total_added) {
         print colored(get_heading("Added", $total_added), $COLOR{GREY});
-        for my $idx (0 .. $total_added - 1) {
-            print_git_file($$files_to_add_ref[$idx], $idx + 1);
+        for my $i (0 .. $total_added - 1) {
+            print_git_file($$files_to_add_ref[$i], $i + 1);
         }
         print "\n";
     }
     my $total_excluded = scalar(@$files_to_exclude_ref);
     if ($total_excluded) {
         print colored(get_heading("Excluded", $total_excluded), $COLOR{GREY});
-        for my $idx (0 .. $total_excluded - 1) {
-            print_git_file($$files_to_exclude_ref[$idx], $idx + 1,
-                           $COLOR{YELLOW});
+        for my $i (0 .. $total_excluded - 1) {
+            print_git_file($$files_to_exclude_ref[$i], $i + 1, $COLOR{YELLOW});
         }
         print "\n";
     }
 
     die(colored("Nothing to add", $COLOR{RED}) . "\n") unless $total_added;
 
-    print colored("Commit message:", $COLOR{GREY}) . "\n";
-    print colored(sprintf("%6s%s", "", $COMMIT_MESSAGE), $COLOR{BLUE}) . "\n";
+    unless ($COMMIT_MESSAGE eq $USE_EDITOR_MSG) {
+        print colored("Commit message:", $COLOR{GREY}) . "\n";
+        print colored(sprintf("%6s%s\n", "", $COMMIT_MESSAGE), $COLOR{BLUE});
+    }
 
     exit if $DRY_RUN;
 
@@ -360,4 +342,4 @@ sub main {
     git_add_commit_push($added_files);
 }
 
-main()
+main();
