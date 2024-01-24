@@ -15,11 +15,11 @@ function show_dircolors() {
 	done
 }
 show_dircolors
-
-dircolors --print-database >temp
+dir_colors_file="${HOME}/z_trash/dir_colors_file"
+dircolors --print-database > ${dir_colors_file}
 printf "Now edit file temp or copy temp to .dircolors"
 # edit vi temp  #
-eval $(dircolors -b temp)
+eval $(dircolors -b ${dir_colors_file})
 ls --color=auto $HOME
 
 printf "\nLS_COLORS:"
