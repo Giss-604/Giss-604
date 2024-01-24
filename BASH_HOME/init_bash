@@ -1,3 +1,0 @@
-ln -sf $HOME/BASH_HOME/DOT_DIR/bashrc ~/.bashrc
-ln -sf $HOME/BASH_HOME/DOT_DIR/gitconfig ~/.gitconfig
-ln -sf $HOME/BASH_HOME/DOT_DIR/gitignore ~/.gitignore
