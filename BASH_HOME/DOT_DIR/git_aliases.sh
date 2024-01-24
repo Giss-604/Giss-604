@@ -1,4 +1,7 @@
 ##!/usr/bin/env sh
+#
+alias ghbh="git clone git@github.com:Giss-604/tnl.git ~/BASH_HOME_4git" # GitHubBashHpme
+
 
 alias gs="git status"
 alias gcm="git checkout main"
