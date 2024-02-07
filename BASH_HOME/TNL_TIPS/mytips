@@ -436,6 +436,9 @@ we indicate that we’re looking for a file modified more than 90 days ago.
 Write -90 (using a minus sign) for less than 90 days.
 Use neither a plus nor a minus to mean exactly 90 days.
 
+Find all the files that have changed in the last 60 minutes :
+find /home -type f -mmin -60
+
 Find and delete files older 2 days that has in name "*.slurm.[eo]*":
 find . -type f  -mtime +2 -name "*.slurm.[eo]*" -exec \rm -f {} \;
 
