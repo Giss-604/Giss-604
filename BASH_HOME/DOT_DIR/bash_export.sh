@@ -123,10 +123,12 @@ function set_SLES() {
 	export PATH="${XCLIP_HOME}:$PATH" # add xclip for nvim
 
 	export RUST_HOME="/discover/nobackup/ntausnev/RUST_2"
+	export NODE_HOME="/discover/nobackup/ntausnev/nodejs-latest"
 	export TRASH_DIR="/discover/nobackup/ntausnev/Z_Deleted_Files"
 
 	export PATH="${RUST_HOME}/rust/rustc/bin:$PATH" # rustc
 	export PATH="${RUST_HOME}/rust/cargo/bin:$PATH" # cargo
+	export PATH="${NODE_HOME}/node-v12.18.0-linux-x64/bin:$PATH" # node npm
 
 	export LD_LIBRARY_PATH="${RUST_HOME}/rust/rustc/lib:$LD_LIBRARY_PATH"
 } # end function set_SLES
