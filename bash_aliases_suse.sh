@@ -6,7 +6,10 @@ export USERNAME=$(logname) # has problem when start job from qsub
 
 alias sshd="ssh -XY -o ServerAliveInterval=120 ntausnev@login.nccs.nasa.gov"
 
-alias nvim="/discover/nobackup/ntausnev/nvim.appimage \
+# BINARY:
+# alias nvim="/discover/nobackup/ntausnev/nvim95/nvim-linux64/bin \
+# Appimage:
+alias nvim="/discover/nobackup/ntausnev/nvim95/squashfs-root/usr/bin/nvim \
   -c 'set guicursor= | autocmd OptionSet guicursor noautocmd set guicursor=| \
       set clipboard+=unnamedplus' "
 
