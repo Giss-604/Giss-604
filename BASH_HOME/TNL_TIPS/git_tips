@@ -14,6 +14,37 @@
 ##############################################################################
 ##############################################################################
 ##############################################################################
+git restore pathTo/MyFile
+The above will restore MyFile on HEAD (the last commit) on the current branch.
+
+You can use the following command:
+git checkout filename
+
+If you have a branch with the same file name you have to use this command:
+git checkout -- filename
+Anything following the -- is treated as a filename 
+(not as a program argument). This is important if, 
+for example, you have filenames which start with dashes.
+
+Anything following the -- is treated as a filename 
+(not as a program argument). This is important if, 
+for example, you have filenames which start with dashes.
+
+git checkout <filename> discards the changes in the current 
+branch and replaces the file with the version from the 
+specified branch or commit. If you have unmerged changes
+in the file, this command will fail and you'll get an error message.
+
+git checkout -- <filename> discards all changes in the file, 
+including any unmerged changes. This is useful when you want 
+to completely discard your local changes and start over
+with the version from the specified branch or commit.
+
+In summary, git checkout <filename> is used to switch
+to a specific version of a file while preserving the changes
+that have been merged into the current branch, 
+while git checkout -- <filename> discards all changes 
+in a file, including unmerged changes.
 ##############################################################################
 <<<<<<< HEAD
 NewCustomName: /home/nick/BASH_HOME/TNL_TIPS  F39 GISS 15:33:46  Fri Jan 26 
