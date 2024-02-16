@@ -1,0 +1,283 @@
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+<<<<<<< HEAD
+NewCustomName: /home/nick/BASH_HOME/TNL_TIPS  Update after commit on Fedora"
+=======
+NewCustomName: /home/nick/BASH_HOME/TNL_TIPS  F39 GISS 15:33:46  Fri Jan 26 
+>>>>>>> refs/remotes/origin/main
+##############################################################################
+gs611-abakan: /home/ntausnev  1326 exit code=0 10:14:35  Fri Jan 26
+##############################################################################
+See difference between local repo with github repository:
+##############################################################################
+git difftool --tool=meld  main remotes/origin/main
+edit difference and add commit and pull/push
+$ git status −−short
+$ git status −s
+The short status of each path is shown as one of the following −
+
+XY PATH
+
+XY is a two−letter status code, where X represents status of 
+the file in the staging area and Y represents status of 
+the file in the working directory. The following table lists 
+the possible values for X and Y.
+Indicator	Interpretation
+‘ ’	Unmodified
+M	Modified signifies that a file has been modified but not yet staged.
+A	Added indicates that a file has been added to the staging area.
+D	Deleted indicates that a file has been deleted from the working directory.
+R	Renamed
+C	Copied
+U	Updated but unmerged
+There can be several combinations of the above indicators 
+depending on the status of a file in each of these areas. 
+
+The status code, ??, represents an untracked file.
+
+$ git status -s
+AM file1.txt
+AM file2.txt
+The output (AM) indicates that the content of the file 
+in the staging area and the working tree are different. 
+It means that the file’s content has been modified in 
+the working tree, but the changes to the file are not staged.
+
+X          Y     Meaning
+-------------------------------------------------
+ [AMD]   not updated
+M        [ MTD]  updated in index
+T        [ MTD]  type changed in index
+A        [ MTD]  added to index
+D                deleted from index
+R        [ MTD]  renamed in index
+C        [ MTD]  copied in index
+[MTARC]          index and work tree matches
+[ MTARC]    M    work tree changed since index
+[ MTARC]    T    type changed in work tree since index
+[ MTARC]    D    deleted in work tree
+	    R    renamed in work tree
+	    C    copied in work tree
+-------------------------------------------------
+D           D    unmerged, both deleted
+A           U    unmerged, added by us
+U           D    unmerged, deleted by them
+U           A    unmerged, added by them
+D           U    unmerged, deleted by us
+A           A    unmerged, both added
+U           U    unmerged, both modified
+-------------------------------------------------
+?           ?    untracked
+!           !    ignored
+-------------------------------------------------
+
+
+##############################################################################
+How configure P4Merge as merge and diff tool on Linux
+https://gist.github.com/IvanCl4udio/b606735bedcdcdea7cb7a9790d96ca74
+
+If you like me use a Linux station to do your development and don't want 
+to use the standard Git diff tool this Gist is for you.
+
+Installation
+Download installation from Perforce Web Site
+https://www.perforce.com/downloads/visual-merge-tool
+
+Or download via command line:
+
+$ curl https://cdist2.perforce.com/perforce/r19.1/bin.linux26x86_64/p4v.tgz -o p4v.tgz
+Unpack on a directory of your choice
+$ sudo mkdir -p /opt/p4merge
+$ sudo tar -zxvf p4v.tgz -C /opt/p4merge --strip-components=1
+Add the directory from p4merge binaries on you PATH variable 
+changing the file ~/.profile:
+$ vi ~/.profile
+...
+export PATH=$PATH:/opt/p4merge/bin
+...
+Update your environment variables:
+$ source ~/.profile 
+Alternatively you can create a symbolic link inside a directory 
+that alreadly setted on PATH variable of your system, for example:
+
+$ sudo ln -s /opt/p4merge/bin/p4merge /usr/local/bin/p4merge
+
+GIT Configuration
+Configure your git client to use P4Merge as your diff and merge tool
+$ vi ~/.gitconfig
+...
+[merge]
+    # Change to true if you wish to keep a backup of the files that was merged
+    keepBackup = false;
+    tool = p4merge
+[mergetool]
+    prompt = false
+[mergetool "p4merge"]
+    cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
+[diff]
+    tool = p4merge
+[difftool]
+    prompt = false
+[difftool "p4merge"]
+    cmd = p4merge "$LOCAL" "$REMOTE"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
+...
+To verify run
+$ git difftool
+ ##############################################################################
+
+ Configuration file for git:
+ ~/ .gitconfig
+
+ Appear after:
+
+git config --global user.name tnl
+git config --global user.email ntausnev@gmail.com
+git config --global core.editor "vim"
+
+Look at config for git:
+git config --list
+
+
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+Git ignore files
+https://www.toptal.com/developers/gitignore
+
+# Created by https://www.toptal.com/developers/gitignore/api/premake-gmake
+
+# Edit at https://www.toptal.com/developers/gitignore?templates=premake-gmake
+
+### premake-gmake ###
+Makefile
+*.make
+obj/
+
+# End of https://www.toptal.com/developers/gitignore/api/premake-gmake]
+
+
+##############################################################################
+##############################################################################
+Adding an existing project to GitHub using the command line
+
+1. Create a new repository on GitHub. You can also add a gitignore file,
+a readme and a licence if you want
+
+2. Open Git Bash
+Change the current working directory to your local project.
+
+3. Initialize the local directory as a Git repository.
+git init
+
+4. Add the files in your new local repository. This stages them for
+the first commit:
+git add .
+
+5.  Commit the files that you have staged in your local repository:
+git commit -m "initial commit"
+
+5.  Copy the https url of your newly created repo
+In the Command prompt, add the URL for the remote repository
+where your local repository will be pushed.
+
+git remote add origin https://github.com/ntausnev/ECCO
+git remote -v
+
+6. Push the changes in your local repository to GitHub.
+git push -f origin master
+
+!!! That is all !!!
+##############################################################################
+You can test that your local key works by entering
+ssh -T git@github.com in the terminal:
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+$ ssh -T git@github.com
+Check Git remote URL with
+git remote -v
+
+We're off to a great start. Let's set up SSH to allow agent 
+forwarding to your server.
+We're off to a great start. Let's set up SSH to allow agent 
+forwarding to your server.
+
+Using your favorite text editor, open up the file at ~/.ssh/config. 
+If this file doesn't exist, you can create it by entering 
+touch ~/.ssh/config in the terminal.
+
+Enter the following text into the file, replacing example.com 
+with your server's domain name or IP:
+
+Host example.com
+  ForwardAgent yes
+To test that agent forwarding is working with your server, 
+you can SSH into your server and run 
+ssh -T git@github.com 
+once more. If all is well, you'll get back the same prompt 
+as you did locally.
+
+If you're unsure if your local key is being used, you can 
+also inspect the SSH_AUTH_SOCK variable on your server:
+
+$ echo "$SSH_AUTH_SOCK"
+# Print out the SSH_AUTH_SOCK variable
+> /tmp/ssh-4hNGMk8AZX/agent.79453
+If the variable is not set, it means that agent forwarding 
+is not working:
+
+$ echo "$SSH_AUTH_SOCK"
+# Print out the SSH_AUTH_SOCK variable
+> [No output]
+$ ssh -T git@github.com
+# Try to SSH to github
+> Permission denied (publickey).
+
+On most computers, the operating system automatically 
+launches ssh-agent for you. 
+To verify that ssh-agent is running on your computer,
+type the following command in the terminal:
+
+$ echo "$SSH_AUTH_SOCK"
+# Print out the SSH_AUTH_SOCK variable
+> /tmp/launch-kNSlgU/Listeners
+
+
+You can check that your key is visible to ssh-agent by running the following
+command:
+ssh-add -L
+
+If the command says that no identity is available, you'll need to add your key:
+$ ssh-add YOUR-KEY
+
+Your key must be available to ssh-agent
+You can check that your key is visible to ssh-agent by running the following command:
+
+ssh-add -L
+If the command says that no identity is available, you'll need to add your key:
+
+$ ssh-add YOUR-KEY
+##############################################################################
+##############################################################################
+
+

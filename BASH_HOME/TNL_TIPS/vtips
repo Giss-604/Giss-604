@@ -15,7 +15,71 @@ colorscheme line and setting the theme you prefer.
 colorscheme slate
 
 ################################################################################
+Indentation
+
+You can set these in your .vimrc file.
+
+set expandtab       "Use softtabstop spaces instead of tab characters for indentation
+set shiftwidth=4    "Indent by 4 spaces when using >>, <<, == etc.
+set softtabstop=4   "Indent by 4 spaces when pressing <TAB>
+
+set autoindent      "Keep indentation from previous line
+set smartindent     "Automatically inserts indentation in some cases
+set cindent         "Like smartindent, but stricter and more customisable
+
+
+You can use the norm i command to insert given text at the 
+beginning of the line. To insert 10 spaces before lines 2-10:
+:2,10norm 10i   #### INSERT space after i !!!
+
+
+Remember that there has to be a space character at the 
+end of the command - this will be the character we want 
+to have inserted. We can also indent a line with 
+any other text, for example to indent every line 
+in a file with five underscore characters:
+
+:%norm 5i_
+Or something even more fancy:
+:%norm 2i[ ]
+
+More practical example is commenting Bash/Python/etc code with # character:
+:1,20norm i#
+
+To re-indent use x instead of i. For example, 
+to remove first 5 characters from every line:
+:%norm 5x
+
+
 ################################################################################
+
+Press "SHIFT + v" to enter VISUAL LINE mode.
+Select the text you wish to indent but using either
+the cursor keys or the "j" and "k" keys.
+To indent right press "SHIFT + dot" (> character). 
+To indent left press "SHIFT + comma" (< character).
+
+14,21> shifts line number 14 to 21 to one tab
+Increase the '>' symbol for more tabs.
+For example,
+14,21>>>     for three tabs
+
+I like to mark text for indentation:
+1. go to beginning of line of text then type ma 
+2. go to end line of text and type mz 
+3. :'a,'z> or :'a,'z< will indent or outdent 
+
+ma Mark top of block to indent as marker 'a'
+...move cursor to end location
+>'a    Indent from marker 'a' to current location
+
+5>>  Indent 5 lines
+5==  Re-indent 5 lines
+5== will indent five lines from the current cursor position.
+
+
+
+
 ################################################################################
 ################################################################################
 ################################################################################
