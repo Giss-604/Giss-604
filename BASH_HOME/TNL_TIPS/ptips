@@ -1,4 +1,41 @@
-
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+$ flake8 --exclude=venv --ignore=E501,F811,E126,E127,W504
+./tests/ch02_math/ex09_armstrong_test.py:13:5: E731 do not assign a lambda
+expression, use a def
+./ch03_recursion/intro/intro.py:137:5: E731 do not assign a lambda
+expression, use a def
+./ch03_recursion/intro/intro.py:138:5: E731 do not assign a lambda
+expression, use a def
+./ch03_recursion/solutions/ex01_fibonacci.py:56:5: E731 do not assign a
+lambda expression, use a def
+./ch05_datastructures/intro/basics.py:41:1: E731 do not assign a lambda
+expression, use a def
+./ch06_arrays/solutions/ex06_erase_and_fall_down.py:146:5: F841 local
+variable 'book_example' is assigned to but never used
+./ch07_recursion_advanced/solutions/ex01_towers_of_hanoi.py:39:5: E731 do
+not assign a lambda expression, use a def
+Just for your info, these checks are excluded:
+• E501 line too long (80 > 79 characters: As already stated, 79
+characters per line are pretty few these days.
+• F811 redefinition of unused ‘...’ from line ...: Samples
+sometimes redefine variables and functions.
+• E126 continuation line over-indented for hanging indent:
+Minor deviations from the standard to achieve a nicer layout.
+• E127 continuation line over-indented for visual indent:
+Minor deviations from the standard to achieve a nicer layout.
+• W504 line break after binary operator: Minor deviations from
+the standard to achieve a nicer layout 
+https://medium.com/@roelljr/ultimate-python-cheat-sheet-practical-python-for-everyday-tasks-c267c1394ee8
 ###############################################################################
 #FIND FILES RECURCEVELY WITH PATTERN:
 import glob
