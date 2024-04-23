@@ -1,0 +1,17 @@
+You should be sure to know which linux version you use
+lsb_release -a
+
+
+To get the version of my R installation I use
+R.Version()
+or
+R.version.string
+
+
+if(!require('STI')) {
+  install.packages('STI')
+  library('STI')
+}
+
+
+
